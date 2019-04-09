@@ -9,4 +9,37 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>RemoverServelet</display-name>
+    <servlet-name>RemoverServelet</servlet-name>
+    <servlet-class>view.RemoverServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoverServelet</servlet-name>
+    <url-pattern>/RemoverServelet</url-pattern>
+    <url-pattern>/remover</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CadastroServelet</display-name>
+    <servlet-name>CadastroServelet</servlet-name>
+    <servlet-class>view.CadastroServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastroServelet</servlet-name>
+    <url-pattern>/CadastroServelet</url-pattern>
+    <url-pattern>/cadastro</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListarServelet</display-name>
+    <servlet-name>ListarServelet</servlet-name>
+    <servlet-class>view.ListarServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListarServelet</servlet-name>
+    <url-pattern>/ListarServelet</url-pattern>
+    <url-pattern>/listar</url-pattern>
+  </servlet-mapping>
 </web-app>
