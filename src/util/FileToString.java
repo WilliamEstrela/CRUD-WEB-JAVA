@@ -12,11 +12,11 @@ public class FileToString {
 		    BufferedReader in = new BufferedReader(new FileReader(diretorio));
 		    String str;
 		    while ((str = in.readLine()) != null) {
-		        contentBuilder.append(str);
+		        contentBuilder.append(str + "\n");
 		    }
 		    in.close();
 		} catch (IOException e) {
-			System.out.println("Deu ruim");
+			System.out.println("Caminho errado");
 			e.printStackTrace();
 		}
 		String content = contentBuilder.toString();

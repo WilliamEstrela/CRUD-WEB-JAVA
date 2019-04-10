@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 
 import interfaces.IConversor;
+import modelo.Modelo;
 import util.Retorno;
 
 public class Celular extends Modelo<Integer>{

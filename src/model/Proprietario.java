@@ -1,14 +1,16 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import interfaces.IConversor;
+import modelo.Modelo;
 import util.Retorno;
 
 public class Proprietario extends Modelo<Integer>{
 	
-	private String nome;
 	private String cpf;
+	private String nome;
 	private String telefone;
 	
 	private Celular celular;
@@ -26,8 +28,16 @@ public class Proprietario extends Modelo<Integer>{
 	}
 	@Override
 	public List<Object> getCamposValor() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Object> list = new ArrayList<>();
+		
+		list.add(this.getPk());
+		list.add(this.getCpf());
+		list.add(this.getNome());
+		list.add(this.getTelefone());
+		
+		list.add(this.getCelular());
+		
+		return list;
 	}
 	@Override
 	public boolean getUsarPkNaInsercao() {
@@ -41,8 +51,14 @@ public class Proprietario extends Modelo<Integer>{
 	}
 	@Override
 	public List<String> getCamposNome() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> listNomes = new ArrayList<>();
+		listNomes.add("pk");
+		listNomes.add("cpf");
+		listNomes.add("nome");
+		listNomes.add("telefone");
+		
+		listNomes.add("celular");
+		return listNomes;
 	}
 	@Override
 	protected List<String> getCamposObrigatorios() {
@@ -56,8 +72,31 @@ public class Proprietario extends Modelo<Integer>{
 	}
 	@Override
 	public Modelo<?> getNovoObjeto() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Proprietario();
+	}
+	public String getCpf() {
+		return cpf;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public String getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	public Celular getCelular() {
+		return celular;
+	}
+	public void setCelular(Celular celular) {
+		this.celular = celular;
 	}
 
 }

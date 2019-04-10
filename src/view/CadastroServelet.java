@@ -26,13 +26,12 @@ public class CadastroServelet extends HttpServlet{
 	private void enviarFormularioDeInserir(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		PrintWriter out = response.getWriter();
-
-		FileToString fts1 = new FileToString("/Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroCelular.html");
 		
-		FileToString fts2 = new FileToString("/Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroProprietario.html");
+		String cadastroCelular = FileToString.convert("Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroCelular.html");
+		String cadastroProprietario = FileToString.convert("Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroCelular.html");
 		
-		out.println(fts1.fileTostring());
-		out.println(fts2.fileTostring());
+		out.println(cadastroCelular);
+		out.println(cadastroProprietario);
 	}
  
 
