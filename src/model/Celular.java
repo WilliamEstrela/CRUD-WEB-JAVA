@@ -1,63 +1,58 @@
 package model;
 
-import java.util.List;
-
-import interfaces.IConversor;
-import modelo.Modelo;
-import util.Retorno;
-
-public class Celular extends Modelo<Integer>{
+public class Celular{
+	
+	private Integer id;
 	
 	private String imei;
+	private String marca;
 	private String modelo;
 	private String cor;
 	private String ano;
 	
+	private Proprietario proprietario;
 	
-	@Override
-	public String getModeloNome() {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer getId() {
+		return id;
 	}
-	@Override
-	public String getModeloPKNome() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	@Override
-	public List<Object> getCamposValor() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getImei() {
+		return imei;
 	}
-	@Override
-	public boolean getUsarPkNaInsercao() {
-		// TODO Auto-generated method stub
-		return false;
+	public void setImei(String imei) {
+		this.imei = imei;
 	}
-	@Override
-	public List<IConversor> getCamposConversor() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getModelo() {
+		return modelo;
 	}
-	@Override
-	public List<String> getCamposNome() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
 	}
-	@Override
-	protected List<String> getCamposObrigatorios() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getCor() {
+		return cor;
 	}
-	@Override
-	protected Retorno setCamposValor(List<Object> list) {
-		// TODO Auto-generated method stub
-		return null;
+	public void setCor(String cor) {
+		this.cor = cor;
 	}
-	@Override
-	public Modelo<?> getNovoObjeto() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAno() {
+		return ano;
+	}
+	public void setAno(String ano) {
+		this.ano = ano;
+	}
+	public Proprietario getProprietario() {
+		return proprietario;
+	}
+	public void setProprietario(Proprietario proprietario) {
+		this.proprietario = proprietario;
+	}
+	public String getMarca() {
+		return marca;
+	}
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 	
 	
