@@ -5,15 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class FileToString {
-	
-	private String diretorio;
-
-	public FileToString(String diretorio) {
-		this.diretorio = diretorio;
-	}
-	
-	
-	public String fileTostring() {
+	public static String convert(String diretorio) {
 		
 		StringBuilder contentBuilder = new StringBuilder();
 		try {
@@ -24,11 +16,11 @@ public class FileToString {
 		    }
 		    in.close();
 		} catch (IOException e) {
+			System.out.println("Deu ruim");
+			e.printStackTrace();
 		}
 		String content = contentBuilder.toString();
 		
 		return content;
 	}
-
-	
 }
