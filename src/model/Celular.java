@@ -10,7 +10,7 @@ public class Celular{
 	private String cor;
 	private String ano;
 	
-	private Proprietario proprietario;
+	private Integer proprietario;
 	
 	public Integer getId() {
 		return id;
@@ -42,10 +42,10 @@ public class Celular{
 	public void setAno(String ano) {
 		this.ano = ano;
 	}
-	public Proprietario getProprietario() {
+	public Integer getProprietario() {
 		return proprietario;
 	}
-	public void setProprietario(Proprietario proprietario) {
+	public void setProprietario(Integer proprietario) {
 		this.proprietario = proprietario;
 	}
 	public String getMarca() {

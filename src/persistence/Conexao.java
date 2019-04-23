@@ -39,4 +39,13 @@ public class Conexao {
 		return this.con.prepareStatement(sql);
 	}
 	
+	public void FechaConexao() {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Nao foi possivel fechar a conexao");
+			e.printStackTrace();
+		}
+	}
+	
 }

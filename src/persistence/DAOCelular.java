@@ -1,8 +1,9 @@
 package persistence;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Celular;
 
@@ -36,9 +37,54 @@ public class DAOCelular {
 			
 			preparedStatement.executeUpdate();
 			
+			preparedStatement.close();
+	        dbConnection.FechaConexao();
+			
 		}catch (SQLException e) {
-
+			System.out.println("Erro ao inserir o celular");
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public static ArrayList<Celular> buscar(String imei) {
+		
+		Conexao dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		
+		String sqlProcurarCelular = "SELECT * from celular where imei=?";
+		
+		try {
+			dbConnection = Conexao.obterConexao();
+			
+			preparedStatement = Conexao.obterConexao().obterSQLPreparada(sqlProcurarCelular);
+			
+			preparedStatement.setString(1, imei);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			ArrayList<Celular> celularList = new ArrayList();
+			
+			while(rs.next()) {
+				Celular cell = new Celular();
+				cell.setId(Integer.parseInt(rs.getString("id")));
+				cell.setImei(rs.getString("imei"));
+				cell.setMarca(rs.getString("marca"));
+				cell.setModelo(rs.getString("modelo"));
+				cell.setCor(rs.getString("cor"));
+				cell.setAno(rs.getString("ano"));
+				
+				celularList.add(cell);
+			}
+			
+			return celularList;
+			
+			
+		}catch (SQLException e) {
+			System.out.println("Erro ao procurar um celular por imei");
+			System.out.println(e.getMessage());
+		}
+		return null;
+		
+		
 	}
 }
