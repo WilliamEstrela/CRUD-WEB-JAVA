@@ -61,8 +61,8 @@ public class ListarServelet extends HttpServlet{
 			
 		}
 		
-		
-		String listarCelular = FileToString.convert("/Users/williamestrela/eclipse-workspace/Celulares/src/view/listarCelular.html");
+		String fileSeparator = System.getProperty("file.separator");
+		String listarCelular = FileToString.convert(this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "listarCelular.html");
 		
 		
 		String nova = new String();

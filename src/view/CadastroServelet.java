@@ -44,7 +44,7 @@ public class CadastroServelet extends HttpServlet{
 		 	  
 
 		 	  DAOCelular.inserir(celular);
-		 	  response.sendRedirect("http://localhost:8080/Celulares/cadastro");
+		 	  response.sendRedirect("cadastro");
 		      
 		      PrintWriter out = response.getWriter();
 
@@ -55,8 +55,9 @@ public class CadastroServelet extends HttpServlet{
 		
 		PrintWriter out = response.getWriter();
 		
-		String cadastroCelular = FileToString.convert("/Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroCelular.html");
-	
+		String fileSeparator = System.getProperty("file.separator");
+		String cadastroCelular = FileToString.convert(this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "cadastroCelular.html");
+		
 		if(marcas.isEmpty()) {
 			marcas = DAOMarca.obterMarcas();	
 		}
