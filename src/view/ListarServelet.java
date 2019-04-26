@@ -91,13 +91,16 @@ public class ListarServelet extends HttpServlet{
 		
 		String formularioFinal = listarCelular.replaceAll("##</td>", nova);
 		
+		String cadastroCelular = FileToString.convert(this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "cadastroCelular.html");
+		String teste = new String();
+		teste = formularioFinal.replaceAll("@@", cadastroCelular);
 		
 		if(celulares.isEmpty()) {
 			
 			out.print("<script>alert(\"Nada encontrado\")</script>");
 		}
 		
-		out.print(formularioFinal);
+		out.print(teste);
 	}
 
 }
