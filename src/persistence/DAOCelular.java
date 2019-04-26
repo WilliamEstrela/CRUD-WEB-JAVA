@@ -87,4 +87,45 @@ public class DAOCelular {
 		
 		
 	}
+	
+	public static ArrayList<Celular> buscar() {
+		
+		Conexao dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		
+		String sqlProcurarCelular = "SELECT * from celular";
+		
+		try {
+			dbConnection = Conexao.obterConexao();
+			
+			preparedStatement = Conexao.obterConexao().obterSQLPreparada(sqlProcurarCelular);
+			
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			ArrayList<Celular> celularList = new ArrayList();
+			
+			while(rs.next()) {
+				Celular cell = new Celular();
+				cell.setId(Integer.parseInt(rs.getString("id")));
+				cell.setImei(rs.getString("imei"));
+				cell.setMarca(rs.getString("marca"));
+				cell.setModelo(rs.getString("modelo"));
+				cell.setCor(rs.getString("cor"));
+				cell.setAno(rs.getString("ano"));
+				
+				celularList.add(cell);
+			}
+			
+			return celularList;
+			
+			
+		}catch (SQLException e) {
+			System.out.println("Erro ao procurar um celular por imei");
+			System.out.println(e.getMessage());
+		}
+		return null;
+		
+		
+	}
 }

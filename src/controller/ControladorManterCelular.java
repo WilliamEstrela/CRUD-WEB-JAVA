@@ -31,4 +31,15 @@ public class ControladorManterCelular{
     	return (listaCelulares);
     }
     
+    /**
+     * Lista todos os celulares
+     * @return
+     */
+    public ArrayList<Celular> ListarCelular() {
+    	
+    	ArrayList<Celular> listaCelulares = dao.buscar();
+    	
+    	return (listaCelulares);
+    }
+    
 }

@@ -24,6 +24,7 @@ public class CadastroServelet extends HttpServlet{
 		
 		response.setContentType( "text/html" );
 		
+		
 		enviarFormularioDeInserir(request, response);
 
 		PrintWriter out = response.getWriter();
@@ -67,7 +68,7 @@ public class CadastroServelet extends HttpServlet{
 		//criando uma lista de celulares
 		for(int i=0; i < sizeMarcas; i++) {
 			
-			String temp = "<option>##</option> \n";
+			String temp = "<option selected>##</option> \n";
 			novaLista += temp.replaceAll("##", marcas.get(i).getNome());
 			
 		}

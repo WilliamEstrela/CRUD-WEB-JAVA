@@ -10,20 +10,35 @@
    </head>
    <body>
       <br>
-      <h2>Dados do celular</h2>
       <br>
       <br>
       <form method=post>
          <input type=hidden name=id value=10>
          <table>
             <tr>
-               <td>IMEI</td>
-               <td><input type=text name=imei></td>
+               <td><input type="imei" class="form-control" id="imei" name="imei" aria-describedby="imei" placeholder="Digite o imei"></td>
+               <td><button type="submit" class="btn btn-primary">Procurar</button></td>
+               <td><a href="http://localhost:8080/Celulares/cadastro" class="btn btn-info">Cadastrar</a></td>
             </tr>
             </tr>
-            <tr>
-               <td><input type=submit></td>
-            </tr>
+			<table class="table">
+			  <thead>
+			  	<h1>Celulares</h1>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">Indice</th>
+			      <th scope="col">IMEI</th>
+			      <th scope="col">MARCA</th>
+			      <th scope="col">MODELO</th>
+			      <th scope="col">COR</th>
+			      <th scope="col">ANO</th>
+			      <th scope="col">ACAO</th>
+			      <td>##</td>
+			      <tr>Deletar</tr>
+			    </tr>
+			  </tbody>
+			</table>
          </table>
       </form>
    </body>
