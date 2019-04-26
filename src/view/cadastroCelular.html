@@ -9,44 +9,31 @@
   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
    </head>
    <body>
-      <br>
-      <h2>Dados do celular</h2>
-      <br>
-      <br>
-      <form method=post>
-         <input type=hidden name=id value=10>
-         <table>
-            <tr>
-               <td>IMEI</td>
-               <td><input type=text name=imei></td>
-            </tr>
-            <tr>
-            	Marca
-				<select name="marca">
-				  <option value="##">##</option>
-				</select>
-            <tr>
-            </tr>
-            <tr>
-               <td>MODELO</td>
-               <td><input type=text name=modelo></td>
-            <tr>
-            </tr>
-            <tr>
-               <td>COR</td>
-               <td><input type=text name=cor></td>
-            <tr>
-            </tr>
-            <tr>
-               <td>ANO</td>
-               <td><input type=text name=ano></td>
-            <tr>
-            </tr>
-            <tr>
-               <td><input type=reset></td>
-               <td><input type=submit></td>
-            </tr>
-         </table>
-      </form>
+   <form method=post class="col-sm-2">
+	  <div class="form-group">
+	    <label for="imei">IMEI</label>
+	    <input type="imei" class="form-control" id="imei" name="imei" aria-describedby="imei" placeholder="Digite o imei">
+	  </div>
+	  <div class="form-group">
+	     <label for="marca">Marca</label>
+	      <select id="marca" class="form-control" name="marca">
+	        <option selected>Selecione a marca</option>
+	        <option>##</option>
+	      </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="modelo">Modelo</label>
+	    <input type="cor" class="form-control" id="modelo" name="modelo" aria-describedby="cor" placeholder="Digite o modelo">
+	  </div>
+	  <div class="form-group">
+	    <label for="cor">Cor</label>
+	    <input type="ano" class="form-control" id="ano" name="cor" aria-describedby="ano" placeholder="Digite a cor">
+	  </div>
+	  <div class="form-group">
+	    <label for="ano">Ano</label>
+	    <input type="ano" class="form-control" id="ano" name="ano" aria-describedby="ano" placeholder="Digite o ano">
+	  </div>
+	  <button type="submit" class="btn btn-primary">Cadastrar</button>
+	  <button type="reset" class="btn btn-danger">Resetar</button>
    </body>
    </h>

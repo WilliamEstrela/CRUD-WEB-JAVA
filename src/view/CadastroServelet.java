@@ -15,6 +15,7 @@ import persistence.DAOCelular;
 import persistence.DAOMarca;
 import util.FileToString;
 
+
 public class CadastroServelet extends HttpServlet{
 	
 	private ArrayList<Marca> marcas = new ArrayList<>();
@@ -56,7 +57,7 @@ public class CadastroServelet extends HttpServlet{
 		String cadastroCelular = FileToString.convert("/Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroCelular.html");
 	
 		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();
+			marcas = DAOMarca.obterMarcas();	
 		}
 		
 		
@@ -66,12 +67,12 @@ public class CadastroServelet extends HttpServlet{
 		//criando uma lista de celulares
 		for(int i=0; i < sizeMarcas; i++) {
 			
-			String temp = "<option value=\"##\">##</option> \n";
+			String temp = "<option>##</option> \n";
 			novaLista += temp.replaceAll("##", marcas.get(i).getNome());
 			
 		}
 		
-		String cadastroCelularModificado = cadastroCelular.replaceAll("<option value=\"##\">##</option>", novaLista);
+		String cadastroCelularModificado = cadastroCelular.replaceAll("<option>##</option>", novaLista);
 		
 		out.println(cadastroCelularModificado);
 	}
