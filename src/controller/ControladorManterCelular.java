@@ -19,7 +19,11 @@ public class ControladorManterCelular{
         dao.inserir(celular);
     }
 
-    //lista o celular com base no imei
+    /**
+     * Lista celulares com base no IMEI
+     * @param imei
+     * @return
+     */
     public ArrayList<Celular> ListarCelular(String imei) {
     	
     	ArrayList<Celular> listaCelulares = dao.buscar(imei);

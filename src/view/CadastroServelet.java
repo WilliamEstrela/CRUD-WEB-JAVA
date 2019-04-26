@@ -8,14 +8,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import controller.ControladorManterCelular;
 import model.Celular;
-import model.Proprietario;
+import model.Marca;
+import persistence.DAOCelular;
+import persistence.DAOMarca;
 import util.FileToString;
 
 public class CadastroServelet extends HttpServlet{
+	
+	private ArrayList<Marca> marcas = new ArrayList<>();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -37,34 +39,14 @@ public class CadastroServelet extends HttpServlet{
 		 	  celular.setModelo(request.getParameter("modelo"));
 		 	  celular.setCor(request.getParameter("cor"));
 		 	  celular.setAno(request.getParameter("ano"));
-		 	  celular.setProprietario(1);
 		 	  
-		 	  
-		 	  ControladorManterCelular repositoryCelular = new ControladorManterCelular();
-		 	  repositoryCelular.incluirCelular(celular);
-		 	  
-		 	  //procurar um celular ee retorna o id dele com base no imei
-		 	  ArrayList<Celular> celularID = repositoryCelular.ListarCelular(celular.getImei());
-		 	  celular.setId(celularID.get(0).getId());
-		 	  
-		 	  
-		 	  //tem que ir no banco, buscar o id do celular e setar no celular para depois vincular ele
-		 	  //com proprietarios
-		 	  HttpSession session = request.getSession(true);
-		 	  session.setAttribute("celular", celular);
-		 	  
-		 	  Proprietario proprietario = new Proprietario();
-		 	  
-		 	  proprietario.setCpf(request.getParameter("cpf"));
-		   	  proprietario.setNome(request.getParameter("nome"));
-		      proprietario.setTelefone(request.getParameter("telefone"));
 
-		 	  
-//		 	  ControladorManterProprietario repositoryProprietario = new ControladorManterProprietario();
-		 	  
+		 	  DAOCelular.inserir(celular);
+		 	  response.sendRedirect("http://localhost:8080/Celulares/cadastro");
 		      
 		      PrintWriter out = response.getWriter();
-		      out.println("Inserindo...");
+
+
 	}
     
 	private void enviarFormularioDeInserir(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -72,10 +54,26 @@ public class CadastroServelet extends HttpServlet{
 		PrintWriter out = response.getWriter();
 		
 		String cadastroCelular = FileToString.convert("/Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroCelular.html");
-		String cadastroProprietario = FileToString.convert("/Users/williamestrela/eclipse-workspace/Celulares/src/view/cadastroProprietario.html");
-
-		out.println(cadastroCelular);
-		out.println(cadastroProprietario);
+	
+		if(marcas.isEmpty()) {
+			marcas = DAOMarca.obterMarcas();
+		}
+		
+		
+		int sizeMarcas = marcas.size();
+		String novaLista = new String();
+		
+		//criando uma lista de celulares
+		for(int i=0; i < sizeMarcas; i++) {
+			
+			String temp = "<option value=\"##\">##</option> \n";
+			novaLista += temp.replaceAll("##", marcas.get(i).getNome());
+			
+		}
+		
+		String cadastroCelularModificado = cadastroCelular.replaceAll("<option value=\"##\">##</option>", novaLista);
+		
+		out.println(cadastroCelularModificado);
 	}
  
 

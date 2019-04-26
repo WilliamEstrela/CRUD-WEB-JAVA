@@ -16,12 +16,12 @@ public class DAOCelular {
 		
 	}
 	
-	public static void inserir(Celular celular) {
+	public static int inserir(Celular celular) {
 		
 		Conexao dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String sqlInserirCelular = "INSERT INTO celular (imei, marca, modelo, cor, ano, fk_proprietario) VALUES (?, ?, ?, ?, ?, null) ";
+		String sqlInserirCelular = "INSERT INTO celular (imei, marca, modelo, cor, ano) VALUES (?, ?, ?, ?, ?) ";
 		
 		try {
 			dbConnection = Conexao.obterConexao();
@@ -35,15 +35,15 @@ public class DAOCelular {
 			preparedStatement.setString(4, celular.getCor());
 			preparedStatement.setString(5, celular.getAno());
 			
-			preparedStatement.executeUpdate();
-			
-			preparedStatement.close();
-	        dbConnection.FechaConexao();
-			
+			preparedStatement.execute();   
+        
+            preparedStatement.close();
+            
 		}catch (SQLException e) {
 			System.out.println("Erro ao inserir o celular");
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 		}
+		return 0;
 	}
 	
 	public static ArrayList<Celular> buscar(String imei) {

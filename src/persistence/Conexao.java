@@ -34,8 +34,7 @@ public class Conexao {
 		}
 		return singleton;
 	}
-	public PreparedStatement obterSQLPreparada(String sql) 
-			throws SQLException {
+	public PreparedStatement obterSQLPreparada(String sql) throws SQLException {
 		return this.con.prepareStatement(sql);
 	}
 	
