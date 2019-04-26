@@ -55,9 +55,6 @@ public class ListarServelet extends HttpServlet{
 		}else {//procurando todos os celulares
 			celulares = repositoryCelular.ListarCelular();
 			int tamanho = celulares.size();
-			for(int i=0; i< tamanho; i++ ) {
-				System.out.println("IMEI`s" +celulares.get(i).getImei());
-			}
 			
 		}
 		
