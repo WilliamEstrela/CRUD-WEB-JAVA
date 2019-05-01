@@ -20,6 +20,18 @@ public class ControladorManterCelular{
     }
 
     /**
+     * Lista celulares com base na PK
+     * @param imei
+     * @return
+     */
+    public Celular ListarCelular(int id) {
+    	Celular celular = new Celular();
+    	celular = dao.buscar(id);
+    	
+    	return celular;
+    }
+    
+    /**
      * Lista celulares com base no IMEI
      * @param imei
      * @return
@@ -30,6 +42,7 @@ public class ControladorManterCelular{
     	
     	return (listaCelulares);
     }
+	
     
     /**
      * Lista todos os celulares

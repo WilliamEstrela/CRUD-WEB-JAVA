@@ -23,4 +23,9 @@ public class FileToString {
 		
 		return content;
 	}
+	
+	public static String getFileSeparator() {
+		String fileSeparator = System.getProperty("file.separator");
+		return fileSeparator;
+	}
 }

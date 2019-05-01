@@ -69,6 +69,7 @@ public class ListarServelet extends HttpServlet{
 		for(int i=0; i < tamanho; i++) {
 			
 			String temporaria = "<td>##</td> \n";
+			int id = celulares.get(i).getId();
 			
 			nova += "<tr>";
 			nova += temporaria.replaceAll("<td>##</td>", "<td>" + i + "</td>");
@@ -79,7 +80,7 @@ public class ListarServelet extends HttpServlet{
 			nova += temporaria.replaceAll("<td>##</td>", "<td>" + celulares.get(i).getAno() + "</td>");
 			nova += temporaria.replaceAll("<td>##</td>", "<td>"
 					+ " <button type=\"submit\" class=\"btn btn-danger btn-sm\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
-					+ " <button type=\"submit\" class=\"btn btn-info btn-sm\"><span class=\\\"glyphicon glyphicon-refresh\\\"></span></button>"
+					+ " <a href=\"cadastro?id="+ id +"\" formmethod=\"post\" class=\"btn btn-info btn-sm\"><span class=\\\"glyphicon glyphicon-refresh\\\"></span></button>"
 					+ " </td>");
 			nova += "</tr>";
 			

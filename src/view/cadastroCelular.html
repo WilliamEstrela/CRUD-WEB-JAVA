@@ -10,7 +10,7 @@
    <form method=post class="col-sm-2">
 	  <div class="form-group">
 	    <label for="imei">IMEI</label>
-	    <input type="imei" class="form-control" id="imei" name="imei" aria-describedby="imei" placeholder="Digite o imei" required>
+	    <input type="imei" class="form-control" id="imei" name="imei" aria-describedby="imei" placeholder="Digite o imei" value="{{imei}}" required>
 	  </div>
 	  <div class="form-group">
 	     <label for="marca">Marca</label>
@@ -21,15 +21,15 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="modelo">Modelo</label>
-	    <input type="cor" class="form-control" id="modelo" name="modelo" aria-describedby="cor" placeholder="Digite o modelo" required>
+	    <input type="cor" class="form-control" id="modelo" name="modelo" aria-describedby="cor" placeholder="Digite o modelo" value="{{modelo}}" required>
 	  </div>
 	  <div class="form-group">
 	    <label for="cor">Cor</label>
-	    <input type="ano" class="form-control" id="ano" name="cor" aria-describedby="ano" placeholder="Digite a cor" required>
+	    <input type="ano" class="form-control" id="ano" name="cor" aria-describedby="ano" placeholder="Digite a cor" value="{{cor}}" required>
 	  </div>
 	  <div class="form-group">
 	    <label for="ano">Ano</label>
-	    <input type="ano" class="form-control" id="ano" name="ano" aria-describedby="ano" placeholder="Digite o ano" required>
+	    <input type="ano" class="form-control" id="ano" name="ano" aria-describedby="ano" placeholder="Digite o ano" value="{{ano}}" required>
 	  </div>
 	  <button type="submit" class="btn btn-primary">Cadastrar</button>
 	  <a href="listar" class="btn btn-info">Listar</a>

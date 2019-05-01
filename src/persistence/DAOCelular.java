@@ -46,6 +46,56 @@ public class DAOCelular {
 		return 0;
 	}
 	
+
+	/**
+	 * Busca o celular com base no id
+	 * @param id
+	 * @return
+	 */
+	public static Celular buscar(int id) {
+		
+		Conexao dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		
+		String sqlProcurarCelular = "SELECT * from celular where id=?";
+		
+		try {
+			dbConnection = Conexao.obterConexao();
+			
+			preparedStatement = Conexao.obterConexao().obterSQLPreparada(sqlProcurarCelular);
+			String x= String.valueOf(id);
+			preparedStatement.setInt(1,id);
+			
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			
+			
+			Celular cell = new Celular();
+			rs.next();
+			cell.setId(Integer.parseInt(rs.getString("id")));
+			cell.setImei(rs.getString("imei"));
+			cell.setMarca(rs.getString("marca"));
+			cell.setModelo(rs.getString("modelo"));
+			cell.setCor(rs.getString("cor"));
+			cell.setAno(rs.getString("ano"));
+				
+			return cell;
+			
+			
+		}catch (SQLException e) {
+			System.out.println("Erro ao procurar um celular por imei");
+			System.out.println(e.getMessage());
+		}
+		return null;
+		
+		
+	}
+	
+	/**
+	 * Procura um celular com base no imei
+	 * @param imei
+	 * @return
+	 */
 	public static ArrayList<Celular> buscar(String imei) {
 		
 		Conexao dbConnection = null;
@@ -88,6 +138,10 @@ public class DAOCelular {
 		
 	}
 	
+	/**
+	 * Lista todos os celulares
+	 * @return
+	 */
 	public static ArrayList<Celular> buscar() {
 		
 		Conexao dbConnection = null;
