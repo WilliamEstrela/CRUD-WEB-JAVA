@@ -10,3 +10,11 @@
 \.build
 
 build/
+
+\.idea/
+
+out/
+
+*.eml
+
+*.iml
