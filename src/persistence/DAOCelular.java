@@ -16,6 +16,11 @@ public class DAOCelular {
 		
 	}
 	
+	/**
+	 * Insere um celular no banco de dados
+	 * @param celular
+	 * @return
+	 */
 	public static int inserir(Celular celular) {
 		
 		Conexao dbConnection = null;
@@ -36,7 +41,6 @@ public class DAOCelular {
 			preparedStatement.setString(5, celular.getAno());
 			
 			preparedStatement.execute();   
-        
             preparedStatement.close();
             
 		}catch (SQLException e) {
@@ -46,7 +50,6 @@ public class DAOCelular {
 		return 0;
 	}
 	
-
 	/**
 	 * Busca o celular com base no id
 	 * @param id
@@ -179,6 +182,67 @@ public class DAOCelular {
 			System.out.println(e.getMessage());
 		}
 		return null;
+		
+		
+	}
+
+	/**
+	 * Atualiza o celular com base na PK do celular
+	 * @param celular
+	 */
+	public static void atualizar(Celular celular) {
+		String sql = "UPDATE celular SET imei=?, marca=?, modelo=?, cor=?, ano=? WHERE id=?";
+		
+		Conexao dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+
+			dbConnection = Conexao.obterConexao();
+			
+			preparedStatement = Conexao.obterConexao().obterSQLPreparada(sql);
+			
+			preparedStatement.setString(1, celular.getImei());
+			preparedStatement.setString(2, celular.getMarca());
+			preparedStatement.setString(3, celular.getModelo());
+			preparedStatement.setString(4, celular.getCor());
+			preparedStatement.setString(5, celular.getAno());
+			preparedStatement.setInt(6, celular.getId());
+			
+			preparedStatement.executeUpdate();
+			preparedStatement.close();
+
+		} catch (SQLException e) {
+			System.out.println("Erro ao atualizar o celular");
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Remove um celular do banco de dados
+	 * @param celular
+	 */
+	public static void remover(Celular celular) {
+		String sql = "DELETE from celular WHERE id = ?";
+		
+		Conexao dbConnection = null;
+		PreparedStatement preparedStatement = null;
+		
+		try {
+
+			dbConnection = Conexao.obterConexao();
+			
+			preparedStatement = Conexao.obterConexao().obterSQLPreparada(sql);
+			preparedStatement.setInt(1, celular.getId());
+			
+			preparedStatement.execute();
+			preparedStatement.close();
+			
+			
+		} catch (SQLException e) {
+			System.out.println("Erro ao deletar o celular");
+			e.printStackTrace();
+		}
 		
 		
 	}

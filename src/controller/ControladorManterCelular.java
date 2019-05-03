@@ -54,5 +54,18 @@ public class ControladorManterCelular{
     	
     	return (listaCelulares);
     }
+
+    /**
+     * Atualiza um celular no banco de dados
+     * @param celular
+     */
+	public void atualizar(Celular celular) {
+		dao.atualizar(celular);
+		
+	}
+	
+	public void remover(Celular celular) {
+		dao.remover(celular);
+	}
     
 }

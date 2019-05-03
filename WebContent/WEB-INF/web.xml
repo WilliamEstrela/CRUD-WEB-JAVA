@@ -42,4 +42,15 @@
     <url-pattern>/ListarServelet</url-pattern>
     <url-pattern>/listar</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateServelet</display-name>
+    <servlet-name>UpdateServelet</servlet-name>
+    <servlet-class>view.UpdateServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateServelet</servlet-name>
+    <url-pattern>/UpdateServelet</url-pattern>
+    <url-pattern>/update</url-pattern>
+  </servlet-mapping>
 </web-app>

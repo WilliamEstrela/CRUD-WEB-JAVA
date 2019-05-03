@@ -79,8 +79,8 @@ public class ListarServelet extends HttpServlet{
 			nova += temporaria.replaceAll("<td>##</td>", "<td>" + celulares.get(i).getCor() + "</td>");
 			nova += temporaria.replaceAll("<td>##</td>", "<td>" + celulares.get(i).getAno() + "</td>");
 			nova += temporaria.replaceAll("<td>##</td>", "<td>"
-					+ " <button type=\"submit\" class=\"btn btn-danger btn-sm\"><span class=\"glyphicon glyphicon-minus\"></span></button>"
-					+ " <a href=\"cadastro?id="+ id +"\" formmethod=\"post\" class=\"btn btn-info btn-sm\"><span class=\\\"glyphicon glyphicon-refresh\\\"></span></button>"
+					+ " <a href=\"remover?id="+ id +"\" formmethod=\"post\" class=\"btn btn-danger btn-sm\"><span class=\\\"glyphicon glyphicon-minus\\\"></span></button>"
+					+ " <a href=\"update?id="+ id +"\" formmethod=\"post\" class=\"btn btn-info btn-sm\"><span class=\\\"glyphicon glyphicon-refresh\\\"></span></button>"
 					+ " </td>");
 			nova += "</tr>";
 			

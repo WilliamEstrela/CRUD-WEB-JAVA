@@ -12,97 +12,99 @@ import javax.servlet.http.HttpServletResponse;
 import controller.ControladorManterCelular;
 import model.Celular;
 import model.Marca;
-import persistence.DAOCelular;
 import persistence.DAOMarca;
 import util.FileToString;
 
 
-public class CadastroServelet extends HttpServlet{
+public class UpdateServelet extends HttpServlet{
 	
 	private ArrayList<Marca> marcas = new ArrayList<>();
 	
-	/**
-	 * Primeiro metodo a ser executado, ele envia o formulario de inserir ao acessar /cadastro
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
 			response.setContentType( "text/html" );
 			
-			enviarFormularioDeInserir(request, response);
+			//verificando se veio um id na requisicao
+			String id = request.getParameter("id");
 			
-		}
+			if( request.getParameter("id") != null ){
+				enviarFormularioDeAlteracao(request, response, Integer.parseInt(id));
+			}else {
+				response.sendRedirect("cadastro");
+			}
+			
 	
-	/**
-	 * Ao preencher o formulario de inserir o e clicar em enviar este metodo eh chamado e o celular eh persistido no banco de dados
-	 */
+		}
+		
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		 	  insereCelularNoBanco(request, response);
+		atuaizaCelularNoBanco(request, response);
 	}
-
+	
+	
 	/**
 	 * Metodo responsavel por receber uma requisicao e persistir os dados do celular no banco
 	 * @param request
 	 * @param response
 	 * @throws IOException
 	 */
-	private static void insereCelularNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Celular celular = new Celular();
+	private static void atuaizaCelularNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		  Celular celular = new Celular();
 		  
-		  
+		  celular.setId(Integer.valueOf(request.getParameter("id")));
 		  celular.setImei(request.getParameter("imei"));
 		  celular.setMarca(request.getParameter("marca"));
 		  celular.setModelo(request.getParameter("modelo"));
 		  celular.setCor(request.getParameter("cor"));
 		  celular.setAno(request.getParameter("ano"));
-		  
-
-		  DAOCelular.inserir(celular);
+		
+		  ControladorManterCelular controleManterCelular = new ControladorManterCelular();
+		  controleManterCelular.atualizar(celular);
 		  
 		  response.sendRedirect("listar");
 	}
 	
 	/**
-	 * Formulario de cadastro
+	 * Formulario de alteracao
 	 * @param request
 	 * @param response
+	 * @param id
 	 * @throws IOException
 	 */
-	private void enviarFormularioDeInserir(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void enviarFormularioDeAlteracao(HttpServletRequest request, HttpServletResponse response, Integer id) throws IOException {
 		
 		PrintWriter out = response.getWriter();
-		
-		String cadastroCelular = arquivoParaString("cadastroCelular.html");
-		
+				
 		if(marcas.isEmpty()) {
 			marcas = DAOMarca.obterMarcas();	
 		}
 		
-		
-		int sizeMarcas = marcas.size();
-		String novaLista = new String();
-		
-		//criando uma lista de celulares
-		for(int i=0; i < sizeMarcas; i++) {
+		ControladorManterCelular daoCelular = new ControladorManterCelular();
 			
-			String temp = "<option selected>##</option> \n";
-			novaLista += temp.replaceAll("##", marcas.get(i).getNome());
-			
+		Celular celular = new Celular();
+		
+		int idCelular;
+		
+		if(id != null) {//ira buscar no banco
+			idCelular = Integer.parseInt(request.getParameter("id"));
+			celular = daoCelular.ListarCelular(idCelular);
 		}
+		
+		String cadastroCelular = arquivoParaString("cadastroCelular.html");
+		
+		String formularioUpdate1;
+		String formularioUpdate2;
+		String formularioUpdate3;
+		String formularioUpdate4;
+		
+		
+		formularioUpdate1 = cadastroCelular.replace("{{imei}}"     , celular.getImei());
+		formularioUpdate2 = formularioUpdate1.replace("{{modelo}}" , celular.getModelo());
+		formularioUpdate3 = formularioUpdate2.replace("{{cor}}"    ,  celular.getCor());
+		formularioUpdate4 = formularioUpdate3.replace("{{ano}}"    ,  celular.getAno());
 			
-		String formularioUpdate1, formularioUpdate2, formularioUpdate3, formularioUpdate4, formularioUpdate5;
-		
-		formularioUpdate1 = cadastroCelular.replace("{{imei}}"     , "");
-		//marca
-		formularioUpdate2 = formularioUpdate1.replace("{{modelo}}" , "");
-		formularioUpdate3 = formularioUpdate2.replace("{{cor}}"    ,  "");
-		formularioUpdate4 = formularioUpdate3.replace("{{ano}}"    ,  "");
-		
-		formularioUpdate5 = formularioUpdate4.replaceAll("<option>##</option>", novaLista);
-		
-		out.println(formularioUpdate5);
+		out.println(formularioUpdate4);
 	}
-
+	
 	/**
 	 * Recebe um nome de arquivo e retorna a string correspondente a ele
 	 * @param arquivo
@@ -114,7 +116,5 @@ public class CadastroServelet extends HttpServlet{
 		String cadastroCelular = FileToString.convert(diretorio);
 		return cadastroCelular;
 	}
-	
-
 
 }
