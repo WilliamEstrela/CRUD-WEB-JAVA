@@ -96,6 +96,7 @@ public class ListarServelet extends HttpServlet{
 		if(celulares.isEmpty()) {
 			
 			out.print("<script>alert(\"Nada encontrado\")</script>");
+			response.sendRedirect("cadastro");
 		}
 		
 		out.print(teste);

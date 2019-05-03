@@ -72,7 +72,9 @@ public class CadastroServelet extends HttpServlet{
 		
 		PrintWriter out = response.getWriter();
 		
-		String cadastroCelular = arquivoParaString("cadastroCelular.html");
+		String temppp = arquivoParaString("cadastroCelular.html");
+		
+		String cadastroCelular = temppp.replaceAll("<button type=\"remover\" class=\"btn btn-danger\">Remover</button>", " ");
 		
 		if(marcas.isEmpty()) {
 			marcas = DAOMarca.obterMarcas();	
