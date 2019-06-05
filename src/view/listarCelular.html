@@ -37,7 +37,22 @@
 			      <th scope="col">COR</th>
 			      <th scope="col">ANO</th>
 			      <th scope="col">ACAO</th>
-			      <td>##</td>
+			      
+				<!-- $beginBlock mantercelular -->
+						<tr>
+							<td>${indice}</td>
+							<td>${id}</td>
+							<td>${imei}</td>
+							<td>${marca}</td>
+							<td>${modelo}</td>
+							<td>${cor}</td>
+							<td>${ano}</td>
+							<td>
+								<a href="update?id=${id}">Editar</a>
+								<a href="remover?id=${id}">Remover</a>
+							</td>
+						</tr>
+				<!-- $endBlock mantercelular -->
 			      
 			    </tr>
 			  </tbody>

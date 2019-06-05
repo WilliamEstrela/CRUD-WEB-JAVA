@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controller.ControladorManterCelular;
 import model.Celular;
 import model.Marca;
 import persistence.DAOCelular;
