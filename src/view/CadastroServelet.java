@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import biz.source_code.miniTemplator.MiniTemplator;
 import model.Celular;
 import model.Marca;
 import persistence.DAOCelular;
 import persistence.DAOMarca;
-import util.FileToString;
 
 
+@SuppressWarnings("serial")
 public class CadastroServelet extends HttpServlet{
 	
 	private ArrayList<Marca> marcas = new ArrayList<>();
@@ -47,14 +48,12 @@ public class CadastroServelet extends HttpServlet{
 	 */
 	private static void insereCelularNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		Celular celular = new Celular();
-		  
-		  
+
 		  celular.setImei(request.getParameter("imei"));
 		  celular.setMarca(request.getParameter("marca"));
 		  celular.setModelo(request.getParameter("modelo"));
 		  celular.setCor(request.getParameter("cor"));
 		  celular.setAno(request.getParameter("ano"));
-		  
 
 		  DAOCelular.inserir(celular);
 		  
@@ -71,51 +70,33 @@ public class CadastroServelet extends HttpServlet{
 		
 		PrintWriter out = response.getWriter();
 		
-		String temppp = arquivoParaString("cadastroCelular.html");
-		
-		String cadastroCelular = temppp.replaceAll("<button type=\"remover\" class=\"btn btn-danger\">Remover</button>", " ");
-		
 		if(marcas.isEmpty()) {
 			marcas = DAOMarca.obterMarcas();	
 		}
 		
+		String fileSeparator = System.getProperty("file.separator");
+		String localArquivoCadastro = this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "cadastroCelular.html"; 
+		MiniTemplator t = new MiniTemplator(localArquivoCadastro);
+		
+		t.setVariable("imei", "");
+
+		t.setVariable("modelo", "");
+		t.setVariable("cor", "");
+		t.setVariable("ano", "");
 		
 		int sizeMarcas = marcas.size();
-		String novaLista = new String();
-		
+
 		//criando uma lista de celulares
 		for(int i=0; i < sizeMarcas; i++) {
-			
-			String temp = "<option selected>##</option> \n";
-			novaLista += temp.replaceAll("##", marcas.get(i).getNome());
-			
+			t.setVariable("marca", marcas.get(i).getNome());
+			t.addBlock("marcaBlock");
 		}
 			
-		String formularioUpdate1, formularioUpdate2, formularioUpdate3, formularioUpdate4, formularioUpdate5;
-		
-		formularioUpdate1 = cadastroCelular.replace("{{imei}}"     , "");
-		//marca
-		formularioUpdate2 = formularioUpdate1.replace("{{modelo}}" , "");
-		formularioUpdate3 = formularioUpdate2.replace("{{cor}}"    ,  "");
-		formularioUpdate4 = formularioUpdate3.replace("{{ano}}"    ,  "");
-		
-		formularioUpdate5 = formularioUpdate4.replaceAll("<option>##</option>", novaLista);
-		
-		out.println(formularioUpdate5);
+
+		out.println(t.generateOutput());
 	}
 
-	/**
-	 * Recebe um nome de arquivo e retorna a string correspondente a ele
-	 * @param arquivo
-	 * @return
-	 */
-	private String arquivoParaString(String arquivo) {
-		String fileSeparator = FileToString.getFileSeparator();
-		String diretorio = this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ arquivo;
-		String cadastroCelular = FileToString.convert(diretorio);
-		return cadastroCelular;
-	}
-	
+
 
 
 }
