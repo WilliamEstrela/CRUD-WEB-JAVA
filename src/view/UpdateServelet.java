@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import biz.source_code.miniTemplator.MiniTemplator;
 import controller.ControladorManterCelular;
 import model.Celular;
 import model.Marca;
@@ -73,7 +74,13 @@ public class UpdateServelet extends HttpServlet{
 	private void enviarFormularioDeAlteracao(HttpServletRequest request, HttpServletResponse response, Integer id) throws IOException {
 		
 		PrintWriter out = response.getWriter();
-				
+		
+		String fileSeparator = System.getProperty("file.separator");
+		String localArquivoCadastro = this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "cadastroCelular.html"; 
+		MiniTemplator t = new MiniTemplator(localArquivoCadastro);
+		
+		
+		
 		if(marcas.isEmpty()) {
 			marcas = DAOMarca.obterMarcas();	
 		}
@@ -89,32 +96,24 @@ public class UpdateServelet extends HttpServlet{
 			celular = daoCelular.ListarCelular(idCelular);
 		}
 		
-		String cadastroCelular = arquivoParaString("cadastroCelular.html");
+
 		
-		String formularioUpdate1;
-		String formularioUpdate2;
-		String formularioUpdate3;
-		String formularioUpdate4;
+		t.setVariable("imei", celular.getImei());
+		t.setVariable("marca", celular.getMarca());
+		
+		int tamanho = marcas.size();
+		for(int i=0; i < tamanho; i++) {
+			t.setVariable("marca", marcas.get(i).getNome());
+			t.addBlock("marcaBlock");
+		}			
 		
 		
-		formularioUpdate1 = cadastroCelular.replace("{{imei}}"     , celular.getImei());
-		formularioUpdate2 = formularioUpdate1.replace("{{modelo}}" , celular.getModelo());
-		formularioUpdate3 = formularioUpdate2.replace("{{cor}}"    ,  celular.getCor());
-		formularioUpdate4 = formularioUpdate3.replace("{{ano}}"    ,  celular.getAno());
-			
-		out.println(formularioUpdate4);
+		t.setVariable("cor", celular.getCor());
+		t.setVariable("ano", celular.getAno());
+		
+		out.println(t.generateOutput());
 	}
 	
-	/**
-	 * Recebe um nome de arquivo e retorna a string correspondente a ele
-	 * @param arquivo
-	 * @return
-	 */
-	private String arquivoParaString(String arquivo) {
-		String fileSeparator = FileToString.getFileSeparator();
-		String diretorio = this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ arquivo;
-		String cadastroCelular = FileToString.convert(diretorio);
-		return cadastroCelular;
-	}
+
 
 }
