@@ -5,16 +5,14 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import biz.source_code.miniTemplator.MiniTemplator;
 import controller.ControladorManterCelular;
 import model.Celular;
-import util.FileToString;
 
-public class ListarServelet extends HttpServlet{
+public class ListarServelet extends MiniTemplatorServelet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -57,11 +55,9 @@ public class ListarServelet extends HttpServlet{
 			
 		}
 		
-		String fileSeparator = System.getProperty("file.separator");
-		String localArquivoListar = this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "listarCelular.html"; 
 
-		MiniTemplator t = new MiniTemplator(localArquivoListar);
-
+		MiniTemplator t = this.executaTemplate("listarCelular.html");
+		
 		int tamanho = celulares.size();
 		for(int i=0; i < tamanho; i++) {
 
