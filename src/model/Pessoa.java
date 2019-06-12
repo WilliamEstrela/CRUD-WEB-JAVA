@@ -12,6 +12,16 @@ public class Pessoa{
 	private String cidade;
 	private String estado;
 	private String cep;
+	
+	private String carro;
+	
+	
+	public String getCarro() {
+		return carro;
+	}
+	public void setCarro(String carro) {
+		this.carro = carro;
+	}
 	public Integer getId() {
 		return id;
 	}

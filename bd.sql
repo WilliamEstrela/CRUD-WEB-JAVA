@@ -17,4 +17,5 @@ CREATE TABLE pessoa(
     cidade varchar(20),
     estado varchar(20),
     cep varchar(10)
+    carro varchar(10)
 );

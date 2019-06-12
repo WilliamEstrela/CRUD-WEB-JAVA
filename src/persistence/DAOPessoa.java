@@ -26,7 +26,7 @@ public class DAOPessoa {
 		Conexao dbConnection = null;
 		PreparedStatement preparedStatement = null;
 
-		String sqlInserirPessoa = "INSERT INTO pessoa (cpf, nome, nascimento, telefone, email, cidade, estado, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+		String sqlInserirPessoa = "INSERT INTO pessoa (cpf, nome, nascimento, telefone, email, cidade, estado, cep, carro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 		
 		try {
 			dbConnection = Conexao.obterConexao();
@@ -42,6 +42,8 @@ public class DAOPessoa {
 			preparedStatement.setString(6, pessoa.getCidade());
 			preparedStatement.setString(7, pessoa.getEstado());
 			preparedStatement.setString(8, pessoa.getCep());
+			
+			preparedStatement.setString(9, pessoa.getCarro());
 			
 			preparedStatement.execute();   
             preparedStatement.close();
@@ -74,20 +76,20 @@ public class DAOPessoa {
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			
-			
-			Pessoa cell = new Pessoa();
+			Pessoa pessoa = new Pessoa();
 			rs.next();
-			cell.setId(Integer.parseInt(rs.getString("id")));
-			cell.setCpf(rs.getString("cpf"));
-			cell.setNome(rs.getString("nome"));
-			cell.setNascimento(rs.getString("nascimento"));
-			cell.setTelefone(rs.getString("telefone"));
-			cell.setEmail(rs.getString("email"));
-			cell.setCidade(rs.getString("cidade"));
-			cell.setEstado(rs.getString("estado"));
-			cell.setCep(rs.getString("cep"));
-			return cell;
+			pessoa.setId(Integer.parseInt(rs.getString("id")));
+			pessoa.setCpf(rs.getString("cpf"));
+			pessoa.setNome(rs.getString("nome"));
+			pessoa.setNascimento(rs.getString("nascimento"));
+			pessoa.setTelefone(rs.getString("telefone"));
+			pessoa.setEmail(rs.getString("email"));
+			pessoa.setCidade(rs.getString("cidade"));
+			pessoa.setEstado(rs.getString("estado"));
+			pessoa.setCep(rs.getString("cep"));
+			pessoa.setCarro(rs.getString("carro"));
+			
+			return pessoa;
 			
 			
 		}catch (SQLException e) {
@@ -168,21 +170,23 @@ public class DAOPessoa {
 			
 			ResultSet rs = preparedStatement.executeQuery();
 			
-			ArrayList<Pessoa> pessoaList = new ArrayList();
+			ArrayList<Pessoa> pessoaList = new ArrayList<Pessoa>();
 			
 			while(rs.next()) {
-				Pessoa cell = new Pessoa();
-				cell.setId(Integer.parseInt(rs.getString("id")));
-				cell.setCpf(rs.getString("cpf"));
-				cell.setNome(rs.getString("nome"));
-				cell.setNascimento(rs.getString("nascimento"));
-				cell.setTelefone(rs.getString("telefone"));
-				cell.setEmail(rs.getString("email"));
-				cell.setCidade(rs.getString("cidade"));
-				cell.setEstado(rs.getString("estado"));
-				cell.setCep(rs.getString("cep"));
+				Pessoa pessoa = new Pessoa();
+				pessoa.setId(Integer.parseInt(rs.getString("id")));
+				pessoa.setCpf(rs.getString("cpf"));
+				pessoa.setNome(rs.getString("nome"));
+				pessoa.setNascimento(rs.getString("nascimento"));
+				pessoa.setTelefone(rs.getString("telefone"));
+				pessoa.setEmail(rs.getString("email"));
+				pessoa.setCidade(rs.getString("cidade"));
+				pessoa.setEstado(rs.getString("estado"));
+				pessoa.setCep(rs.getString("cep"));
 				
-				pessoaList.add(cell);
+				pessoa.setCarro(rs.getString("carro"));
+				
+				pessoaList.add(pessoa);
 			}
 			
 			return pessoaList;
@@ -202,7 +206,7 @@ public class DAOPessoa {
 	 * @param pessoa
 	 */
 	public static void atualizar(Pessoa pessoa) {
-		String sql = "UPDATE pessoa SET nome=?, nascimento=?, telefone=?, email=?, cidade=?, estado=? cep=? WHERE id=?";
+		String sql = "UPDATE pessoa SET nome=?, nascimento=?, telefone=?, email=?, cidade=?, estado=?, cep=?, carro=? WHERE id=?";
 		
 		Conexao dbConnection = null;
 		PreparedStatement preparedStatement = null;
@@ -213,14 +217,15 @@ public class DAOPessoa {
 			
 			preparedStatement = Conexao.obterConexao().obterSQLPreparada(sql);
 			
-			preparedStatement.setString(1, pessoa.getCpf());
-			preparedStatement.setString(2, pessoa.getNome());
-			preparedStatement.setString(3, pessoa.getNascimento());
-			preparedStatement.setString(4, pessoa.getTelefone());
-			preparedStatement.setString(5, pessoa.getEmail());
-			preparedStatement.setString(6, pessoa.getCidade());
-			preparedStatement.setString(7, pessoa.getEstado());
-			preparedStatement.setString(8, pessoa.getCep());
+			preparedStatement.setString(1, pessoa.getNome());
+			preparedStatement.setString(2, pessoa.getNascimento());
+			preparedStatement.setString(3, pessoa.getTelefone());
+			preparedStatement.setString(4, pessoa.getEmail());
+			preparedStatement.setString(5, pessoa.getCidade());
+			preparedStatement.setString(6, pessoa.getEstado());
+			preparedStatement.setString(7, pessoa.getCep());
+			preparedStatement.setString(8, pessoa.getCarro());
+			
 			preparedStatement.setInt(9, pessoa.getId());
 			
 			preparedStatement.executeUpdate();

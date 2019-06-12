@@ -12,7 +12,7 @@ public class Conexao {
 	
 	private Conexao() throws SQLException{
 			con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5433/celulares",
+					"jdbc:postgresql://localhost:5432/celulares",
 					"postgres",
 					"");
 	}

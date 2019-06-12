@@ -19,37 +19,46 @@
          <input type=hidden name=id value=10>
          <table>
             <tr>
-               <td><input type="imei" class="form-control" id="imei" name="imei" aria-describedby="imei" placeholder="Digite o imei"></td>
+               <td><input type="cpf" class="form-control" id="cpf" name="cpf" aria-describedby="cpf" placeholder="Digite o cpf"></td>
                <td><button type="submit" class="btn btn-primary">Procurar</button></td>
                <td><a href="cadastro" class="btn btn-info">Cadastrar</a></td>
             </tr>
             </tr>
 			<table class="table">
 			  <thead>
-			  	<h1>Celulares</h1>
+			  	<h1>Pessoas</h1>
 			  </thead>
 			  <tbody>
 			    <tr>
-			      <th scope="col">IMEI</th>
-			      <th scope="col">MARCA</th>
-			      <th scope="col">MODELO</th>
-			      <th scope="col">COR</th>
-			      <th scope="col">ANO</th>
+			      <th scope="col">CPF</th>
+			      <th scope="col">NOME</th>
+			      <th scope="col">NASCIMENTO</th>
+			      <th scope="col">TELEFONE</th>
+			      <th scope="col">EMAIL</th>
+			      <th scope="col">CIDADE</th>
+			      <th scope="col">ESTADO</th>
+			      <th scope="col">CEP</th>
+			      <th scope="col">CARRO</th>
 			      <th scope="col">ACAO</th>
-				<!-- $beginBlock mantercelular -->
+				<!-- $beginBlock manterpessoa -->
 						<tr>
 							<td style="display:none;">${id}</td>
-							<td>${imei}</td>
-							<td>${marca}</td>
-							<td>${modelo}</td>
-							<td>${cor}</td>
-							<td>${ano}</td>
+							<td>${cpf}</td>
+							<td>${nome}</td>
+							<td>${nascimento}</td>
+							<td>${telefone}</td>
+							<td>${email}</td>
+							<td>${cidade}</td>
+							<td>${estado}</td>
+							<td>${cep}</td>
+							<td>${carro}</td>
+							
 							<td>
 								<a href="cadastro?id=${id}">Editar</a>
 								<a href="remover?id=${id}">Remover</a>
 							</td>
 						</tr>
-				<!-- $endBlock mantercelular -->
+				<!-- $endBlock manterpessoa -->
 			      
 			    </tr>
 			  </tbody>
