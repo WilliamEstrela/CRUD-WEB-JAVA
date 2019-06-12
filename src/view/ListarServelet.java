@@ -60,8 +60,8 @@ public class ListarServelet extends MiniTemplatorServelet{
 		
 		int tamanho = celulares.size();
 		for(int i=0; i < tamanho; i++) {
-
-
+			
+			t.setVariable("id", celulares.get(i).getId());
 			t.setVariable("imei", celulares.get(i).getImei());
 			t.setVariable("marca", celulares.get(i).getMarca());
 			t.setVariable("modelo", celulares.get(i).getModelo());
