@@ -13,7 +13,7 @@ import biz.source_code.miniTemplator.MiniTemplator;
 import controller.ControladorManterCelular;
 import model.Celular;
 import model.Marca;
-import persistence.DAOCelular;
+import persistence.DAOPessoa;
 import persistence.DAOMarca;
 
 
@@ -71,7 +71,7 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		  celular.setCor(request.getParameter("cor"));
 		  celular.setAno(request.getParameter("ano"));
 
-		  DAOCelular.inserir(celular);
+		  DAOPessoa.inserir(celular);
 		  
 		  response.sendRedirect("listar");
 	}
@@ -87,7 +87,7 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		PrintWriter out = response.getWriter();
 		
 		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+			marcas = DAOMarca.obterCarros();	
 		}
 		
 		MiniTemplator t = this.executaTemplate("cadastroCelular.html");
@@ -114,7 +114,7 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		PrintWriter out = response.getWriter();
 		
 		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+			marcas = DAOMarca.obterCarros();	
 		}
 		
 		MiniTemplator t = this.executaTemplate("cadastroCelular.html");

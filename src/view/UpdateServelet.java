@@ -82,7 +82,7 @@ public class UpdateServelet extends HttpServlet{
 		
 		
 		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+			marcas = DAOMarca.obterCarros();	
 		}
 		
 		ControladorManterCelular daoCelular = new ControladorManterCelular();

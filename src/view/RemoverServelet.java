@@ -77,7 +77,7 @@ public class RemoverServelet extends MiniTemplatorServelet{
 		MiniTemplator t = this.executaTemplate("cadastroCelular.html");
 				
 		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+			marcas = DAOMarca.obterCarros();	
 		}
 		
 		ControladorManterCelular daoCelular = new ControladorManterCelular();

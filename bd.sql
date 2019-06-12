@@ -1,14 +1,20 @@
-create table marca
+create table carro
 (
 	id serial not null,
-	nome varchar(256)
+	placa varchar(20),
+	marca varchar(20),
+	modelo varchar(20),
+	ano integer
 );
 
-CREATE TABLE celular(
+CREATE TABLE pessoa(
     id SERIAL PRIMARY KEY,
-    imei varchar(11),
-    marca varchar(100),
-    modelo varchar(100),
-    cor varchar(100),
-    ano varchar(4),
+    cpf varchar(11),
+    nome varchar(60),
+    nascimento varchar(10),
+    telefone varchar(15),
+    email varchar(100),
+    cidade varchar(20),
+    estado varchar(20),
+    cep varchar(10)
 );
