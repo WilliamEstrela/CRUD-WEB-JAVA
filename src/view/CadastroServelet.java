@@ -5,16 +5,16 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import biz.source_code.miniTemplator.MiniTemplator;
 import controller.ControladorManterPessoa;
-import model.Pessoa;
 import model.Carro;
-import persistence.DAOPessoa;
+import model.Pessoa;
 import persistence.DAOCarro;
+import persistence.DAOPessoa;
 
 
 @SuppressWarnings("serial")
@@ -100,7 +100,13 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		MiniTemplator t = this.executaTemplate("cadastroPessoa.html");
 		
 		int sizeMarcas = carros.size();
-		
+
+		Cookie[] cookies = request.getCookies();
+		Cookie cookie = cookies[0];
+
+		String nome = "William";
+		Cookie c1 = new Cookie("nome", nome);		
+		response.addCookie(c1);
 
 		t.setVariable("cpf", "");
 		t.setVariable("nome", "");
@@ -120,6 +126,8 @@ public class CadastroServelet extends MiniTemplatorServelet{
 
 		out.println(t.generateOutput());
 	}
+
+
 
 	private void enviarFormularioDeAtualizar(HttpServletRequest request, HttpServletResponse response, Integer id) throws IOException {
 		
