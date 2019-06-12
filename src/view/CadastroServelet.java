@@ -31,9 +31,9 @@ public class CadastroServelet extends MiniTemplatorServelet{
 			
 			String idRequest = request.getParameter("id");
 
-			if ( idRequest == null) {
+			if ( idRequest == null) {//inserindo
 				enviarFormularioDeInserir(request, response);
-			}else {
+			}else {//atualizandp
 				Integer id = Integer.parseInt(request.getParameter("id"));
 				enviarFormularioDeAtualizar(request, response, id);
 			}
@@ -45,8 +45,6 @@ public class CadastroServelet extends MiniTemplatorServelet{
 	 * Ao preencher o formulario de inserir o e clicar em enviar este metodo eh chamado e o celular eh persistido no banco de dados
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		 	  insereCelularNoBanco(request, response);
 		 	  
 				try {
 					Integer id = Integer.parseInt(request.getParameter("id"));
@@ -119,9 +117,7 @@ public class CadastroServelet extends MiniTemplatorServelet{
 			marcas = DAOMarca.obterMarcas();	
 		}
 		
-		String fileSeparator = System.getProperty("file.separator");
-		String localArquivoCadastro = this.getServletContext().getRealPath(fileSeparator)+fileSeparator+"WEB-INF"+fileSeparator+"classes"+fileSeparator+"view"+fileSeparator+ "cadastroCelular.html"; 
-		MiniTemplator t = new MiniTemplator(localArquivoCadastro);
+		MiniTemplator t = this.executaTemplate("cadastroCelular.html");
 		
 		int sizeMarcas = marcas.size();
 		
@@ -137,6 +133,7 @@ public class CadastroServelet extends MiniTemplatorServelet{
 			t.setVariable("modelo", celular.getModelo());
 			t.setVariable("cor", celular.getCor());
 			t.setVariable("ano", celular.getAno());
+			t.setVariable("id", celular.getId());
 			
 			for(int i=0; i < sizeMarcas; i++) {
 				t.setVariable("marca", marcas.get(i).getNome());
