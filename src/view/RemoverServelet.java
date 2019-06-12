@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import biz.source_code.miniTemplator.MiniTemplator;
-import controller.ControladorManterCelular;
-import model.Celular;
-import model.Marca;
-import persistence.DAOMarca;
+import controller.ControladorManterPessoa;
+import model.Pessoa;
+import model.Carro;
+import persistence.DAOCarro;
 import util.FileToString;
 
 public class RemoverServelet extends MiniTemplatorServelet{
 	
-	private ArrayList<Marca> marcas = new ArrayList<>();
+	private ArrayList<Carro> carros = new ArrayList<>();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
@@ -37,28 +37,32 @@ public class RemoverServelet extends MiniTemplatorServelet{
 		}
 		
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		removeCelularNoBanco(request, response);
+		removePessoaNoBanco(request, response);
 	}
 	
 	
 	/**
-	 * Metodo responsavel por receber uma requisicao e remover os dados do celular no banco
+	 * Metodo responsavel por receber uma requisicao e remover os dados da pessoa no banco
 	 * @param request
 	 * @param response
 	 * @throws IOException
 	 */
-	private static void removeCelularNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		  Celular celular = new Celular();
+	private static void removePessoaNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		  Pessoa pessoa = new Pessoa();
 		  
-		  celular.setId(Integer.valueOf(request.getParameter("id")));
-		  celular.setImei(request.getParameter("imei"));
-		  celular.setMarca(request.getParameter("marca"));
-		  celular.setModelo(request.getParameter("modelo"));
-		  celular.setCor(request.getParameter("cor"));
-		  celular.setAno(request.getParameter("ano"));
+		  pessoa.setId(Integer.valueOf(request.getParameter("id")));
+		  pessoa.setCpf(request.getParameter("cpf"));
+		  pessoa.setNome(request.getParameter("nome"));
+		  pessoa.setNascimento(request.getParameter("nascimento"));
+		  pessoa.setTelefone(request.getParameter("telefone"));
+		  pessoa.setEmail(request.getParameter("email"));
+		  pessoa.setCidade(request.getParameter("cidade"));
+		  pessoa.setEstado(request.getParameter("estado"));
+		  pessoa.setCep(request.getParameter("cep"));
+
 		
-		  ControladorManterCelular controleManterCelular = new ControladorManterCelular();
-		  controleManterCelular.remover(celular);
+		  ControladorManterPessoa controleManterPessoa = new ControladorManterPessoa();
+		  controleManterPessoa.remover(pessoa);
 		  
 		  response.sendRedirect("listar");
 	}
@@ -74,33 +78,35 @@ public class RemoverServelet extends MiniTemplatorServelet{
 		
 		PrintWriter out = response.getWriter();
 		
-		MiniTemplator t = this.executaTemplate("cadastroCelular.html");
+		MiniTemplator t = this.executaTemplate("cadastroPessoa.html");
 				
-		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+		if(carros.isEmpty()) {
+			carros = DAOCarro.obterCarros();	
 		}
 		
-		ControladorManterCelular daoCelular = new ControladorManterCelular();
+		ControladorManterPessoa daoPessoa = new ControladorManterPessoa();
 			
-		Celular celular = new Celular();
+		Pessoa pessoa = new Pessoa();
 		
-		int idCelular;
+		int idPessoa;
 		
 		if(id != null) {//ira buscar no banco
-			idCelular = Integer.parseInt(request.getParameter("id"));
-			celular = daoCelular.ListarCelular(idCelular);
+			idPessoa = Integer.parseInt(request.getParameter("id"));
+			pessoa = daoPessoa.ListarPessoa(idPessoa);
 		}
 		
 		
-		t.setVariable("imei", celular.getImei());
-		
-		t.setVariable("marca", celular.getMarca());
-		
-		t.setVariable("modelo", celular.getModelo());
-		t.addBlock("marcaBlock");
-		
-		t.setVariable("cor", celular.getCor());
-		t.setVariable("ano", celular.getAno());
+		t.setVariable("cpf", pessoa.getCpf());
+		t.setVariable("nome", pessoa.getNome());
+		t.setVariable("nascimento", pessoa.getNascimento());
+		// t.addBlock("marcaBlock");
+	
+		t.setVariable("telefone", pessoa.getTelefone());
+		t.setVariable("email", pessoa.getEmail());
+		t.setVariable("cidade", pessoa.getCidade());
+		t.setVariable("estado", pessoa.getEstado());
+		t.setVariable("cep", pessoa.getCep());
+
 
 			
 		out.println(t.generateOutput());

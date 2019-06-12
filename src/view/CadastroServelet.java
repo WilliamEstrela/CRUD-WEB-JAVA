@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import biz.source_code.miniTemplator.MiniTemplator;
-import controller.ControladorManterCelular;
-import model.Celular;
-import model.Marca;
-import persistence.DAOCelular;
-import persistence.DAOMarca;
+import controller.ControladorManterPessoa;
+import model.Pessoa;
+import model.Carro;
+import persistence.DAOPessoa;
+import persistence.DAOCarro;
 
 
 @SuppressWarnings("serial")
 public class CadastroServelet extends MiniTemplatorServelet{
 	
-	private ArrayList<Marca> marcas = new ArrayList<>();
+	private ArrayList<Carro> carros = new ArrayList<>();
 	
 	/**
 	 * Primeiro metodo a ser executado, ele envia o formulario de inserir ao acessar /cadastro
@@ -42,36 +42,43 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		}
 	
 	/**
-	 * Ao preencher o formulario de inserir o e clicar em enviar este metodo eh chamado e o celular eh persistido no banco de dados
+	 * Ao preencher o formulario de inserir o e clicar em enviar este metodo eh chamado e a pessoa eh persistido no banco de dados
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 	  
 				try {
 					Integer id = Integer.parseInt(request.getParameter("id"));
-					atuaizaCelularNoBanco(request, response);
+					atualizaPessoaNoBanco(request, response);
 				}catch(Exception e) {
-					enviarFormularioDeInserir(request, response);
+					inserePessoaNoBanco(request, response);
 				}
 		 	  
 		 	  
 	}
 
 	/**
-	 * Metodo responsavel por receber uma requisicao e persistir os dados do celular no banco
+	 * Metodo responsavel por receber uma requisicao e persistir os dados da pessoa no banco
 	 * @param request
 	 * @param response
 	 * @throws IOException
 	 */
-	private static void insereCelularNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		Celular celular = new Celular();
+	private static void inserePessoaNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		Pessoa pessoa = new Pessoa();
 
-		  celular.setImei(request.getParameter("imei"));
-		  celular.setMarca(request.getParameter("marca"));
-		  celular.setModelo(request.getParameter("modelo"));
-		  celular.setCor(request.getParameter("cor"));
-		  celular.setAno(request.getParameter("ano"));
+		  pessoa.setCpf(request.getParameter("cpf"));
+		  pessoa.setNome(request.getParameter("nome"));
+		  pessoa.setNascimento(request.getParameter("nascimento"));
+		  pessoa.setTelefone(request.getParameter("telefone"));
+		  pessoa.setEmail(request.getParameter("email"));
+		  pessoa.setCidade(request.getParameter("cidade"));
+		  pessoa.setEstado(request.getParameter("estado"));
+		  pessoa.setCep(request.getParameter("cep"));
+		  
 
-		  DAOCelular.inserir(celular);
+		  pessoa.setCarro(request.getParameter("carro"));
+
+
+		  DAOPessoa.inserir(pessoa);
 		  
 		  response.sendRedirect("listar");
 	}
@@ -86,23 +93,28 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		
 		PrintWriter out = response.getWriter();
 		
-		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+		if(carros.isEmpty()) {
+			carros = DAOCarro.obterCarros();	
 		}
 		
-		MiniTemplator t = this.executaTemplate("cadastroCelular.html");
+		MiniTemplator t = this.executaTemplate("cadastroPessoa.html");
 		
-		int sizeMarcas = marcas.size();
+		int sizeMarcas = carros.size();
 		
 
-		t.setVariable("imei", "");
-		t.setVariable("modelo", "");
-		t.setVariable("cor", "");
+		t.setVariable("cpf", "");
+		t.setVariable("nome", "");
+		t.setVariable("nascimento", "");
+		t.setVariable("telefone", "");
+		t.setVariable("email", "");
+		t.setVariable("cidade", "");
+		t.setVariable("estado", "");
+		t.setVariable("cep", "");
 
-		//criando uma lista de celulares
+		//criando uma lista de pessoas
 		for(int i=0; i < sizeMarcas; i++) {
-			t.setVariable("marca", marcas.get(i).getNome());
-			t.addBlock("marcaBlock");
+			t.setVariable("carro", carros.get(i).getPlaca());
+			t.addBlock("carroBlock");
 		}
 			
 
@@ -113,31 +125,37 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		
 		PrintWriter out = response.getWriter();
 		
-		if(marcas.isEmpty()) {
-			marcas = DAOMarca.obterMarcas();	
+		if(carros.isEmpty()) {
+			carros = DAOCarro.obterCarros();	
 		}
 		
-		MiniTemplator t = this.executaTemplate("cadastroCelular.html");
+		MiniTemplator t = this.executaTemplate("cadastroPessoa.html");
 		
-		int sizeMarcas = marcas.size();
+		int sizeCarros = carros.size();
 		
-		Celular celular = new Celular();
-		int idCelular;
+		Pessoa pessoa = new Pessoa();
+		int idPessoa;
 		if(id != null) {//ira buscar no banco
-			idCelular = Integer.parseInt(request.getParameter("id"));
-			ControladorManterCelular celularRepo = new ControladorManterCelular();
-			celular = celularRepo.ListarCelular(idCelular);
+			idPessoa = Integer.parseInt(request.getParameter("id"));
+			ControladorManterPessoa pessoaRepo = new ControladorManterPessoa();
+			
+			pessoa = pessoaRepo.ListarPessoa(idPessoa);
 			
 			
-			t.setVariable("imei", celular.getImei());
-			t.setVariable("modelo", celular.getModelo());
-			t.setVariable("cor", celular.getCor());
-			t.setVariable("ano", celular.getAno());
-			t.setVariable("id", celular.getId());
+			t.setVariable("cpf", pessoa.getCpf());
+			t.setVariable("nome", pessoa.getNome());
+			t.setVariable("nascimento", pessoa.getNascimento());
+			t.setVariable("telefone", pessoa.getTelefone());
+			t.setVariable("email", pessoa.getEmail());
+			t.setVariable("cidade", pessoa.getCidade());
+			t.setVariable("estado", pessoa.getEstado());
+			t.setVariable("cep", pessoa.getCep());
+			t.setVariable("carro", pessoa.getCarro());
+			t.setVariable("id", pessoa.getId());
 			
-			for(int i=0; i < sizeMarcas; i++) {
-				t.setVariable("marca", marcas.get(i).getNome());
-				t.addBlock("marcaBlock");
+			for(int i=0; i < sizeCarros; i++) {
+				t.setVariable("carro", carros.get(i).getPlaca());
+				t.addBlock("carroBlock");
 			}
 			
 			
@@ -149,23 +167,27 @@ public class CadastroServelet extends MiniTemplatorServelet{
 	}
 	
 	/**
-	 * Metodo responsavel por receber uma requisicao e persistir os dados do celular no banco
+	 * Metodo responsavel por receber uma requisicao e persistir os dados da pessoa no banco
 	 * @param request
 	 * @param response
 	 * @throws IOException
 	 */
-	private static void atuaizaCelularNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		  Celular celular = new Celular();
+	private static void atualizaPessoaNoBanco(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		  Pessoa pessoa = new Pessoa();
 		  
-		  celular.setId(Integer.valueOf(request.getParameter("id")));
-		  celular.setImei(request.getParameter("imei"));
-		  celular.setMarca(request.getParameter("marca"));
-		  celular.setModelo(request.getParameter("modelo"));
-		  celular.setCor(request.getParameter("cor"));
-		  celular.setAno(request.getParameter("ano"));
+		  pessoa.setId(Integer.valueOf(request.getParameter("id")));
+		  pessoa.setCpf(request.getParameter("cpf"));
+		  pessoa.setNome(request.getParameter("nome"));
+		  pessoa.setNascimento(request.getParameter("nascimento"));
+		  pessoa.setTelefone(request.getParameter("telefone"));
+		  pessoa.setEmail(request.getParameter("email"));
+		  pessoa.setCidade(request.getParameter("cidade"));
+		  pessoa.setEstado(request.getParameter("estado"));
+		  pessoa.setCep(request.getParameter("cep"));
+		  pessoa.setCarro(request.getParameter("carro"));
 		
-		  ControladorManterCelular controleManterCelular = new ControladorManterCelular();
-		  controleManterCelular.atualizar(celular);
+		  ControladorManterPessoa controleManterPessoa = new ControladorManterPessoa();
+		  controleManterPessoa.atualizar(pessoa);
 		  
 		  response.sendRedirect("listar");
 	}
