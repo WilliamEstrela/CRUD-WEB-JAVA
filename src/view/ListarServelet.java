@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -60,6 +61,11 @@ public class ListarServelet extends MiniTemplatorServelet{
 		
 		int tamanho = pessoas.size();
 		for(int i=0; i < tamanho; i++) {
+			
+			
+			Cookie[] cookies = request.getCookies();
+			Cookie cookie = cookies[0];
+			t.setVariable("nomeUsuario", cookie.getValue());
 			
 			t.setVariable("id", pessoas.get(i).getId());
 			t.setVariable("cpf", pessoas.get(i).getCpf());
