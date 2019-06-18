@@ -93,16 +93,14 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		
 		PrintWriter out = response.getWriter();
 		
-		if(carros.isEmpty()) {
-			carros = DAOCarro.obterCarros();	
-		}
+		
+		carros = DAOCarro.obterCarros();	
+
 		
 		MiniTemplator t = this.executaTemplate("cadastroPessoa.html");
 		
 		int sizeMarcas = carros.size();
 
-		Cookie[] cookies = request.getCookies();
-		Cookie cookie = cookies[0];
 
 		String nome = "William";
 		Cookie c1 = new Cookie("nome", nome);		
@@ -117,14 +115,14 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		t.setVariable("estado", "");
 		t.setVariable("cep", "");
 
-		//criando uma lista de pessoas
+		//criando uma lista de carro
 		for(int i=0; i < sizeMarcas; i++) {
 			t.setVariable("carro", carros.get(i).getPlaca());
 			t.addBlock("carroBlock");
 		}
 			
 
-		out.println(t.generateOutput());
+		out.println(t.generateOutput());	
 	}
 
 
@@ -133,9 +131,8 @@ public class CadastroServelet extends MiniTemplatorServelet{
 		
 		PrintWriter out = response.getWriter();
 		
-		if(carros.isEmpty()) {
-			carros = DAOCarro.obterCarros();	
-		}
+
+		carros = DAOCarro.obterCarros();	
 		
 		MiniTemplator t = this.executaTemplate("cadastroPessoa.html");
 		
